@@ -1,0 +1,490 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regional Delegation Dashboard</title>
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Font Awesome CDN for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+    <!-- Chart.js CDN for charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <!-- Custom CSS for modern look -->
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7fa;
+        }
+        .sidebar {
+            height: 100vh;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #2c3e50;
+            padding-top: 20px;
+            color: white;
+        }
+        .sidebar a {
+            padding: 15px 20px;
+            text-decoration: none;
+            font-size: 16px;
+            color: white;
+            display: block;
+            transition: background 0.3s;
+        }
+        .sidebar a:hover {
+            background-color: #34495e;
+        }
+        .sidebar .active {
+            background-color: #1abc9c;
+        }
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        .card {
+            border: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .navbar {
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .section {
+            display: none;
+        }
+        .section.active {
+            display: block;
+        }
+        /* Dark mode toggle */
+        .dark-mode {
+            background-color: #1a1a1a;
+            color: white;
+        }
+        .dark-mode .card {
+            background-color: #2c2c2c;
+        }
+        .dark-mode .sidebar {
+            background-color: #121212;
+        }
+        .dark-mode .sidebar a {
+            color: #ddd;
+        }
+        .dark-mode .sidebar a:hover {
+            background-color: #1f1f1f;
+        }
+        .dark-mode .navbar {
+            background-color: #2c2c2c;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Sidebar Navigation -->
+<nav class="sidebar">
+    <div class="sidebar-header text-center mb-4">
+        <h4>Regional Delegation</h4>
+        <small>Littoral Region</small>
+    </div>
+    <a href="#principals-dashboard" class="nav-link"><i class="fas fa-school me-2"></i> Principals Dashboard</a>
+    <a href="#inspectorates-dashboard" class="nav-link"><i class="fas fa-users me-2"></i> Inspectorates Dashboard</a>
+    <a href="#admin-dashboard" class="nav-link active"><i class="fas fa-user-shield me-2"></i> Administrator Dashboard</a>
+    <hr class="bg-light">
+    <a href="#" id="logout"><i class="fas fa-sign-out-alt me-2"></i> Logout</a>
+</nav>
+
+<!-- Main Content -->
+<div class="main-content">
+    <!-- Top Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Dashboard</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-bell"></i> Notifications</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="dark-mode-toggle"><i class="fas fa-moon"></i> Dark Mode</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-user"></i> Profile</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Principals Dashboard Section -->
+    <div id="principals-dashboard" class="section">
+        <h2 class="mt-4 mb-4">Principals' Dashboard</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card p-3">
+                    <h5><i class="fas fa-bell me-2"></i> Notifications</h5>
+                    <ul class="list-group">
+                        <li class="list-group-item">New directive from Delegate</li>
+                        <li class="list-group-item">Report due in 3 days</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card p-3">
+                    <h5><i class="fas fa-file-alt me-2"></i> Official Communications</h5>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Title</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2025-08-20</td>
+                                <td>New Policy Update</td>
+                                <td><button class="btn btn-sm btn-primary">View</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card p-3">
+                    <h5><i class="fas fa-upload me-2"></i> Submit Reports</h5>
+                    <form>
+                        <div class="mb-3">
+                            <label for="reportFile" class="form-label">Upload Report</label>
+                            <input type="file" class="form-control" id="reportFile">
+                        </div>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card p-3">
+                    <h5><i class="fas fa-history me-2"></i> Report History</h5>
+                    <ul class="list-group">
+                        <li class="list-group-item">Enrollment Report - Submitted</li>
+                        <li class="list-group-item">Attendance Report - Pending</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card p-3">
+                    <h5><i class="fas fa-book me-2"></i> Resource Library</h5>
+                    <ul class="list-group">
+                        <li class="list-group-item"><a href="#">Curriculum Guidelines</a></li>
+                        <li class="list-group-item"><a href="#">Teaching Resources</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card p-3">
+                    <h5><i class="fas fa-user-edit me-2"></i> School Profile</h5>
+                    <form>
+                        <div class="mb-3">
+                            <label for="schoolName" class="form-label">School Name</label>
+                            <input type="text" class="form-control" id="schoolName" value="Sample School">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="card p-3">
+                    <h5><i class="fas fa-envelope me-2"></i> Contact Delegation</h5>
+                    <form>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea class="form-control" id="message" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-info">Send</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Inspectorates Dashboard Section -->
+    <div id="inspectorates-dashboard" class="section">
+        <h2 class="mt-4 mb-4">Inspectorates' Dashboard</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card p-3">
+                    <h5><i class="fas fa-bell me-2"></i> Notifications</h5>
+                    <ul class="list-group">
+                        <li class="list-group-item">New report submitted</li>
+                        <li class="list-group-item">Inspection scheduled</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card p-3">
+                    <h5><i class="fas fa-book-open me-2"></i> Guidelines & Resources</h5>
+                    <button class="btn btn-primary mb-3">Upload Resource</button>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Science Guidelines</td>
+                                <td><button class="btn btn-sm btn-primary">View</button> <button class="btn btn-sm btn-danger">Delete</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card p-3">
+                    <h5><i class="fas fa-tasks me-2"></i> Manage Reports</h5>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>School</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>School A</td>
+                                <td>Pending</td>
+                                <td><button class="btn btn-sm btn-warning">Review</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card p-3">
+                    <h5><i class="fas fa-calendar-alt me-2"></i> Calendar & Events</h5>
+                    <div id="calendar"></div> <!-- Placeholder for calendar, can integrate FullCalendar.js if needed -->
+                    <button class="btn btn-success mt-3">Add Event</button>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="card p-3">
+                    <h5><i class="fas fa-comments me-2"></i> Communication Tools</h5>
+                    <form>
+                        <div class="mb-3">
+                            <label for="target" class="form-label">Target Group</label>
+                            <select class="form-select" id="target">
+                                <option>All Principals</option>
+                                <option>Specific School</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="commMessage" class="form-label">Message</label>
+                            <textarea class="form-control" id="commMessage" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-info">Send</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Administrator Dashboard Section -->
+    <div id="admin-dashboard" class="section active">
+        <h2 class="mt-4 mb-4">Administrator Dashboard</h2>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card p-3">
+                    <h5><i class="fas fa-chart-bar me-2"></i> Report Oversight</h5>
+                    <canvas id="reportChart" height="100"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card p-3">
+                    <h5><i class="fas fa-edit me-2"></i> Content Management</h5>
+                    <button class="btn btn-primary mb-3">Add New Content</button>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Page</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Home</td>
+                                <td><button class="btn btn-sm btn-warning">Edit</button> <button class="btn btn-sm btn-danger">Delete</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card p-3">
+                    <h5><i class="fas fa-users-cog me-2"></i> User Management</h5>
+                    <button class="btn btn-success mb-3">Add User</button>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Role</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>principal1</td>
+                                <td>Principal</td>
+                                <td><button class="btn btn-sm btn-warning">Edit</button> <button class="btn btn-sm btn-danger">Delete</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card p-3">
+                    <h5><i class="fas fa-comments me-2"></i> Communication Tools</h5>
+                    <form>
+                        <div class="mb-3">
+                            <label for="broadcast" class="form-label">Broadcast Message</label>
+                            <textarea class="form-control" id="broadcast" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-info">Send to All</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card p-3">
+                    <h5><i class="fas fa-cogs me-2"></i> System Settings</h5>
+                    <form>
+                        <div class="mb-3">
+                            <label for="siteName" class="form-label">Site Name</label>
+                            <input type="text" class="form-control" id="siteName" value="Regional Delegation">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="card p-3">
+                    <h5><i class="fas fa-file-alt me-2"></i> Audit Logs</h5>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>User</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2025-08-24</td>
+                                <td>Admin</td>
+                                <td>Updated content</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS CDN -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<!-- Custom JS for functionality -->
+<script>
+    // Sidebar navigation
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('.section');
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(targetId).classList.add('active');
+            navLinks.forEach(l => l.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+
+    // Dark mode toggle
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+    darkModeToggle.addEventListener('click', function() {
+        document.body.classList.toggle('dark-mode');
+        const icon = darkModeToggle.querySelector('i');
+        if (document.body.classList.contains('dark-mode')) {
+            icon.classList.replace('fa-moon', 'fa-sun');
+        } else {
+            icon.classList.replace('fa-sun', 'fa-moon');
+        }
+    });
+
+    // Sample Chart for Report Oversight
+    const ctx = document.getElementById('reportChart').getContext('2d');
+    const reportChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['School A', 'School B', 'School C', 'School D'],
+            datasets: [{
+                label: 'Enrollment',
+                data: [120, 190, 300, 250],
+                backgroundColor: 'rgba(26, 188, 156, 0.7)'
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // Logout (dummy)
+    document.getElementById('logout').addEventListener('click', function() {
+        alert('Logging out...');
+    });
+
+    // Form submissions (dummy alerts)
+    document.querySelectorAll('form').forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Action submitted successfully!');
+        });
+    });
+</script>
+
+</body>
+</html>
